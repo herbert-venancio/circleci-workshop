@@ -10,7 +10,14 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: 'docker build . -t apresentacao-circle-ci:latest'
+      - run:
+          name: Login at hub docker
+          command: 'docker login -u $DOCKER_USER -p $DOCKER_PASS'
+      - run: 'docker build . -t hwvenancio/apresentacao-circle-ci:latest'
+      - run:
+          name: Push to hub docker
+          command: 'docker push hwvenancio/apresentacao-circle-ci:latest'
+
 workflows:
   version: 2
   default_workflow:
