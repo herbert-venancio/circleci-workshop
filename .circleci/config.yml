@@ -17,6 +17,10 @@ jobs:
       - run:
           name: Push to hub docker
           command: 'docker push hwvenancio/apresentacao-circle-ci:latest'
+  deploy:
+    machine: true
+    steps:
+      - run: 'echo "deploying"'
 
 workflows:
   version: 2
@@ -29,3 +33,10 @@ workflows:
           filters:
             branches:
               only: master
+      - approve_deploy:
+          type: approval
+          requires:
+            - build
+      - deploy:
+          requires:
+            - approve_deploy
