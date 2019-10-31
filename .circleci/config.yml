@@ -1,10 +1,19 @@
 version: 2.1
 jobs:
-  build:
+  test:
     docker:
       - image: maven:3.6-jdk-12
     steps:
       - checkout
-      - run:
-          name: Build and Test
-          command: 'mvn clean verify'
+      - run: mvn clean verify
+  build:
+    machine: true
+    steps:
+      - checkout
+      - run: 'docker build . -t apresentacao-circle-ci:latest'
+workflows:
+  version: 2
+  default_workflow:
+    jobs:
+      - test
+      - build
