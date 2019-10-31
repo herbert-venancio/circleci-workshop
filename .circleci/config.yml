@@ -2,7 +2,9 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/node:4.8.2
+      - image: maven:3.6-jdk-12
     steps:
       - checkout
-      - run: echo "hello world"
+      - run:
+          name: Build and Test
+          command: 'mvn clean verify'
